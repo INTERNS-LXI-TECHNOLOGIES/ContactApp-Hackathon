@@ -5,12 +5,7 @@ import lombok.*;
 
 @Entity
 @Table(name = "user")
-@NoArgsConstructor
-@Getter
-@Setter
-@AllArgsConstructor
-@ToString
-@EqualsAndHashCode
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +14,6 @@ public class User {
     private String contactName;
     @Column
     private double phoneNumber;
+    @Column
+    private String email;
 }
