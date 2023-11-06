@@ -16,7 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String name;
+    private String contactName;
     @Column
-    private double number;
+    private double phoneNumber;
 }
