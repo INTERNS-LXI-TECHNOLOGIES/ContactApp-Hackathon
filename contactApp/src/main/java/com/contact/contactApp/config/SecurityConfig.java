@@ -17,15 +17,16 @@ public class SecurityConfig {
 		http.cors(withDefaults())
 		    .csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/","/cumulus/signup","/cumulus/signingUp","/cumulus/client/signup").permitAll()
+				.requestMatchers("/","/contactapp/signup","/cumulus/signingUp","/cumulus/client/signup").permitAll()
 				.anyRequest().authenticated()
 			)
-			.formLogin((form) -> form
-				.loginPage("/cumulus/login")
-				.permitAll()
-			)
+			.formLogin(withDefaults())
 			.logout((logout) -> logout.permitAll());
 
 		return http.build();
 	}
+    // @Bean
+	// public PasswordEncoder passwordEncoder(){
+	// 	return new BCryptPasswordEncoder();
+	// }
 }

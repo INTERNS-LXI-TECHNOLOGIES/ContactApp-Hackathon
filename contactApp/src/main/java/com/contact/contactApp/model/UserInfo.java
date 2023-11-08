@@ -4,12 +4,10 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 import java.util.List;
@@ -17,13 +15,12 @@ import java.util.List;
 public class UserInfo implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long infoId;
     private String userName;
     private String passWord;
     private String role;
 
-    @OneToOne
-    @JoinColumn(name = "user_domain_id")
+    @OneToOne(mappedBy = "userInfo")
     private UserDomain userDomain;
     
     @Override
@@ -55,7 +52,7 @@ public class UserInfo implements UserDetails{
         return true;
     }
     public void setId(Long id) {
-        this.id = id;
+        this.infoId = id;
     }
     public void setUserName(String userName) {
         this.userName = userName;
@@ -70,7 +67,7 @@ public class UserInfo implements UserDetails{
         this.userDomain = userDomain;
     }
     public Long getId() {
-        return id;
+        return infoId;
     }
     public String getRole() {
         return role;
