@@ -23,7 +23,7 @@ public class WebAppConfig {
     @Bean
 	public UserDetailsService userDetailsService() {
 
-		 return userName -> userInfoRepo.findByUserName(userName).orElseThrow(() -> new UsernameNotFoundException("User not Found"));
+		 return userName -> userInfoRepo.findByUsername(userName).orElseThrow(() -> new UsernameNotFoundException("User not Found"));
 	}
     @Bean
     public AuthenticationProvider authenticationProvider() {

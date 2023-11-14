@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.contact.contactApp.exception.DuplicateEmailException;
+import com.contact.contactApp.exception.DuplicatePhoneNumberException;
 import com.contact.contactApp.model.UserDTO;
 import com.contact.contactApp.model.UserDomain;
 import com.contact.contactApp.repo.UserDomainRepo;
@@ -21,8 +23,15 @@ public class UserService {
     UserInfoRepo userInfoRepo;
 
     public UserDomain createUser(UserDomain user){
+        if(userDomainRepo.existsByemail(user.getEmail())){
+            throw new DuplicateEmailException("Email already exists");
+        }if(userDomainRepo.existsByPhoneNumber(user.getPhoneNumber())){
+            throw new DuplicatePhoneNumberException("Phone number Already Registered");
+        }
+        
         //userInfoRepo.save(user.getUserInfo());
-        user.getUserInfo().setPassWord(passwordEncoder.encode(user.getUserInfo().getPassword()));
+        user.getUserInfo().setPassword(passwordEncoder.encode(user.getUserInfo().getPassword()));
+       
         return userDomainRepo.save(user);
     }
 

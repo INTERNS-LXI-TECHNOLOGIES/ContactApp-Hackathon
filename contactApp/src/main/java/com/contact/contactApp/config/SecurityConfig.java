@@ -17,7 +17,7 @@ public class SecurityConfig {
 		http.cors(withDefaults())
 		    .csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/","/contactapp/signup","/cumulus/signingUp","/cumulus/client/signup").permitAll()
+				.requestMatchers("/contactapp/signup","/contactapp/get/signup","/cumulus/client/signup").permitAll()
 				.anyRequest().authenticated()
 			)
 			.formLogin(withDefaults())

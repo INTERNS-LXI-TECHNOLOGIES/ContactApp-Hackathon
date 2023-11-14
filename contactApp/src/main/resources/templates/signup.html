@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signup Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin-bottom: 8px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: -8px;
+            margin-bottom: 12px;
+        }
+    </style>
+    <script>
+        function updateUsername() {
+            var nameInput = document.getElementById('name');
+            var usernameInput = document.getElementById('username');
+            usernameInput.value = nameInput.value;
+        }
+    </script>
+</head>
+<body>
+    <form th:action="@{/contactapp/signup}" method="post" th:object="${userDomain}">
+        <h1>Signup</h1>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" required="required" oninput="updateUsername()" />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required="required" title="Please enter a valid Email address"/>
+        <div th:if="${erroremail != null and erroremail.contains('Email')}" class="error-message">
+            <p th:text="${erroremail}"></p>
+        </div>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" th:field="*{phoneNumber}" required="required" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number"/>
+        <div th:if="${errornumber != null and errornumber.contains('Phone number')}" class="error-message">
+            <p th:text="${errornumber}"></p>
+        </div>
+        <input type="hidden" id="username" th:field="*{userInfo.username}" />
+
+        <label for="password">Password :</label>
+        <input type="password" id="password" th:field="*{userInfo.password}" required="required" />
+
+        <label>Role :</label>
+        <div class="checkbox-group">
+            <input type="checkbox" id="userRole" th:field="*{userInfo.role}" value="USER" />
+            <label for="userRole">User</label>
+            <input type="checkbox" id="adminRole" th:field="*{userInfo.role}" value="ADMIN" />
+            <label for="adminRole">Admin</label>
+        </div>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

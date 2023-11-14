@@ -16,8 +16,8 @@ public class UserInfo implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long infoId;
-    private String userName;
-    private String passWord;
+    private String username;
+    private String password;
     private String role;
 
     @OneToOne(mappedBy = "userInfo")
@@ -29,11 +29,11 @@ public class UserInfo implements UserDetails{
     }
     @Override
     public String getPassword() {
-        return passWord;
+        return password;
     }
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
     @Override
     public boolean isAccountNonExpired() {
@@ -54,11 +54,11 @@ public class UserInfo implements UserDetails{
     public void setId(Long id) {
         this.infoId = id;
     }
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String passWord) {
+        this.password = passWord;
     }
     public void setRole(String role) {
         this.role = role;
@@ -75,6 +75,13 @@ public class UserInfo implements UserDetails{
     public UserDomain getUserDomain() {
         return userDomain;
     }
+    @Override
+    public String toString() {
+        return "UserInfo [infoId=" + infoId + ", userName=" + username + ", passWord=" + password + ", role=" + role
+                + ", userDomain=" + userDomain + "]";
+    }
+
+    
 }
 
     

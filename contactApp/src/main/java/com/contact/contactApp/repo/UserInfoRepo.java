@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.contact.contactApp.model.UserInfo;
 public interface UserInfoRepo extends CrudRepository<UserInfo,Long>{
-    Optional<UserInfo> findByUserName(String userName);
+    Optional<UserInfo> findByUsername(String userName);
 }
