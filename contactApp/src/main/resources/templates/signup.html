@@ -81,7 +81,13 @@
 
         <label for="name">Name:</label>
         <input type="text" id="name" th:field="*{name}" required="required" oninput="updateUsername()" />
-
+        <div th:if="${errorname != null}" class="error-message">
+            <ul>
+                <li th:each="error : ${errorname}">
+                    <th:block th:text="${error}"></th:block>
+                </li>
+            </ul>
+        </div>
         <label for="email">Email:</label>
         <input type="email" id="email" th:field="*{email}" required="required" title="Please enter a valid Email address"/>
         <div th:if="${erroremail != null and erroremail.contains('Email')}" class="error-message">

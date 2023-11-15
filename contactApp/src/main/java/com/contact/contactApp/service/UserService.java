@@ -3,16 +3,21 @@ package com.contact.contactApp.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import com.contact.contactApp.exception.DuplicateEmailException;
 import com.contact.contactApp.exception.DuplicatePhoneNumberException;
+import com.contact.contactApp.exception.ValidationException;
 import com.contact.contactApp.model.UserDTO;
 import com.contact.contactApp.model.UserDomain;
 import com.contact.contactApp.repo.UserDomainRepo;
 import com.contact.contactApp.repo.UserInfoRepo;
+import com.contact.contactApp.validation.UserValidator;
 @Service
 public class UserService {
     @Autowired
@@ -21,8 +26,16 @@ public class UserService {
     UserDomainRepo userDomainRepo;
     @Autowired
     UserInfoRepo userInfoRepo;
+    @Autowired
+    private UserValidator userValidator;
 
     public UserDomain createUser(UserDomain user){
+         Errors errors = new BeanPropertyBindingResult(user, "user");
+        userValidator.validate(user, errors);
+
+        if (errors.hasErrors()) {
+            throw new ValidationException(errors.getAllErrors());
+        }
         if(userDomainRepo.existsByemail(user.getEmail())){
             throw new DuplicateEmailException("Email already exists");
         }if(userDomainRepo.existsByPhoneNumber(user.getPhoneNumber())){

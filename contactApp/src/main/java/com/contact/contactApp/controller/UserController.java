@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 
 import com.contact.contactApp.exception.DuplicateEmailException;
 import com.contact.contactApp.exception.DuplicatePhoneNumberException;
+import com.contact.contactApp.exception.ValidationException;
 import com.contact.contactApp.model.UserDomain;
 import com.contact.contactApp.model.UserInfo;
 import com.contact.contactApp.service.UserService;
@@ -39,6 +40,9 @@ public class UserController {
           response= "signup";
         }catch(DuplicatePhoneNumberException e){
             model.addAttribute("errornumber", e.getMessage());
+            response="signup";
+        }catch(ValidationException e){
+            model.addAttribute("errorname", e.getErrors());
             response="signup";
         }
         return response;
